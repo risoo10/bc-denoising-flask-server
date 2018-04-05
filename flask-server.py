@@ -36,19 +36,6 @@ def return_hello_world():
         abort(404)
 
 
-@app.route("/image")
-def get_image():
-
-    image = Image.open("apple.jpg")
-    grayscale = image.convert("L")
-
-    output = io.BytesIO()
-    grayscale.save(output, format="JPEG")
-
-
-    return Response(output.getvalue(), mimetype="image/jpg")
-
-
 # if this is the main thread of execution first load the model and
 # then start the server
 if __name__ == "__main__":
