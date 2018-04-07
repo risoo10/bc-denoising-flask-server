@@ -14,6 +14,9 @@ def load_keras_model(filename=""):
 def preprocess_image(image, target):
     return None
 
+@app.route("/")
+def hello():
+    return "Hello, This is my perfect site!"
 
 @app.route("/predict", methods=["POST"])
 def return_hello_world():
@@ -39,6 +42,5 @@ def return_hello_world():
 # if this is the main thread of execution first load the model and
 # then start the server
 if __name__ == "__main__":
-    print(("* Loading Keras model and Flask starting server..."
-        "please wait until server has fully started"))
+    print(("* Loading Keras model and Flask starting server... please wait until server has fully started"))
     app.run()
