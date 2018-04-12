@@ -17,15 +17,14 @@ app = Flask(__name__)
 
 FILENAME = "conv-deconv-renoir-64x64-CON-16F-TRANSP-8D"
 
+global model
+global loss
 
 # My own loss function
 def weighted_loss(y_true, y_pred):
     dssim_loss = loss
     return 0.5 * mean_squared_error(y_true, y_pred) + 0.5 * dssim_loss(y_true, y_pred)
 
-
-loss = dssim.DSSIMObjective()
-model = load_model("models/{}.h5".format(FILENAME), custom_objects={'weighted_loss': weighted_loss})
 
 PATCH_SIZE = 64
 CHANNELS = 3
@@ -113,6 +112,8 @@ def denoise_image_inteligent():
 
 
 if __name__ == "__main__":
+    loss = dssim.DSSIMObjective()
+    model = load_model("models/{}.h5".format(FILENAME), custom_objects={'weighted_loss': weighted_loss})
     app.run(debug=True)
 
 
