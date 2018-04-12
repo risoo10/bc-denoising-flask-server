@@ -1,7 +1,6 @@
 import numpy as np
 from itertools import product
 import cv2
-from sklearn.feature_extraction import image
 from skimage import util
 
 

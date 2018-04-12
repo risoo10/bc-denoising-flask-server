@@ -117,6 +117,6 @@ def denoise_image_inteligent():
 
 if __name__ == "__main__":
     load_model_from_file()
-    app.run()
+    app.run(debug=True)
 
 
