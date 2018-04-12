@@ -15,13 +15,7 @@ import extract_join_patches
 
 app = Flask(__name__)
 
-PATCH_SIZE = 64
-CHANNELS = 3
-STEP = 32
-
-@app.route("/")
-def hello():
-    return "Hello, this is a perfect site for Artificial intelligence."
+FILENAME = "conv-deconv-renoir-64x64-CON-16F-TRANSP-8D"
 
 
 # My own loss function
@@ -30,13 +24,16 @@ def weighted_loss(y_true, y_pred):
     return 0.5 * mean_squared_error(y_true, y_pred) + 0.5 * dssim_loss(y_true, y_pred)
 
 
-# Load model from file
-def load_model_from_file():
-    filename = "conv-deconv-renoir-64x64-CON-16F-TRANSP-8D"
-    global model
-    global loss
-    loss = dssim.DSSIMObjective()
-    model = load_model("models/" + filename + ".h5", custom_objects={'weighted_loss': weighted_loss})
+loss = dssim.DSSIMObjective()
+model = load_model("models/{}.h5".format(FILENAME), custom_objects={'weighted_loss': weighted_loss})
+
+PATCH_SIZE = 64
+CHANNELS = 3
+STEP = 32
+
+@app.route("/")
+def hello():
+    return "Hello, this is a perfect site for Artificial intelligence."
 
 
 # Preprocess image
@@ -116,7 +113,6 @@ def denoise_image_inteligent():
 
 
 if __name__ == "__main__":
-    load_model_from_file()
     app.run(debug=True)
 
 
